@@ -1,0 +1,37 @@
+﻿networks:
+  md-network:
+    driver: bridge
+
+services:
+  md_db:
+    container_name: md_db
+    image: "postgres:16.0-alpine3.18"
+    env_file:
+      - "./.env.development"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - md-network
+  # mailcatcher:
+  #   container_name: mailcatcher-dev
+  #   image: sj26/mailcatcher
+  #   ports:
+  #     - "1025:1025"
+  #     - "1080:1080"
+  md_pgadmin:
+    container_name: md_pgadmin
+    image: dpage/pgadmin4
+    depends_on:
+      - md_db
+    ports:
+      - "15432:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user.dev@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - md-network
+
+volumes:
+  pgdata:
