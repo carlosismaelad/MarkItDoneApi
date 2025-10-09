@@ -1,4 +1,4 @@
-using MarkItDoneApi.V1.Auth.Entity;
+using MarkItDoneApi.V1.Session.Entity;
 using MarkItDoneApi.V1.User.Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +6,7 @@ namespace MarkItDoneApi.Infra.Data
 {
   public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
   {
-    public DbSet<User> Users { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
     public DbSet<Session> Sessions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,7 +15,7 @@ namespace MarkItDoneApi.Infra.Data
       modelBuilder.HasDefaultSchema("public");
       
       // User Migration
-      modelBuilder.Entity<User>(entity =>
+      modelBuilder.Entity<UserEntity>(entity =>
       {
         entity.ToTable("users");
         
