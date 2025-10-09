@@ -1,4 +1,5 @@
 using System.Data;
+using MarkItDoneApi.Src.V1.Core.DomainExceptions;
 using Npgsql;
 
 namespace MarkItDoneApi.Infra.Data;
@@ -14,7 +15,13 @@ public class ConnectionFactory : IConnectionFactory
 
   public ConnectionFactory(IConfiguration configuration)
   {
-    _connectionString = configuration.GetConnectionString("DefaultConnection");
+
+    if (string.IsNullOrEmpty(configuration.GetConnectionString("DefaultConnection")))
+    {
+      throw new ServiceException("A connection string 'DefaultConnection' não foi encontrada ou está vazia.");
+    }
+
+    _connectionString = configuration.GetConnectionString("DefaultConnection")!;
   }
 
   public IDbConnection CreateConnection()
