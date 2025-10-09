@@ -13,7 +13,7 @@ builder.Services.AddOpenApi();
 // Adds controllers support
 builder.Services.AddControllers();
 
-// Configurar Entity Framework apenas para migrations
+// Configure Entity Framework for migrations only
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -21,13 +21,13 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 builder.Services.AddScoped<ConnectionFactory>();
 builder.Services.AddScoped<DatabaseStatusChecker>();
 
-// Registrar dependências da camada User
+// Register User layer dependencies
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
-// Registrar middleware de tratamento de exceptions (PRIMEIRO)
+// Register exception handling middleware (FIRST)
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configures pipeline requests
