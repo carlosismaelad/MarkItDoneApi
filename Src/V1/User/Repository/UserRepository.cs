@@ -1,9 +1,8 @@
 using MarkItDoneApi.Infra.Data;
-using MarkItDoneApi.Src.V1.Core.DomainExceptions;
-using MarkItDoneApi.V1.Core.DomainExceptions;
 using MarkItDoneApi.V1.User.Entity;
 using MarkItDoneApi.V1.User.Rest.DTO;
-using Npgsql;
+using MarkItDoneApi.V1.Core.DomainExceptions;
+using Dapper;
 
 namespace MarkItDoneApi.V1.User.Repository;
 
@@ -18,14 +17,11 @@ public class UserRepository
     
     public async Task ValidateUniqueUsernameAsync(string username)
     {
-        await using var connection = (NpgsqlConnection)_connectionFactory.CreateConnection();
-        await connection.OpenAsync();
+        using var connection = _connectionFactory.CreateConnection();
         
-        await using var selectQuery = new NpgsqlCommand(
-            "SELECT * FROM users WHERE username = @username", connection);
-        selectQuery.Parameters.AddWithValue("username", username);
-        
-        var count = (long)await selectQuery.ExecuteScalarAsync();
+        var count = await connection.QuerySingleAsync<int>(
+            "SELECT COUNT(*) FROM users WHERE username = @username", 
+            new { username });
 
         if (count > 0)
         {
@@ -35,14 +31,11 @@ public class UserRepository
 
     public async Task ValidateUniqueEmailAsync(string email)
     {
-        await using var connection = (NpgsqlConnection)_connectionFactory.CreateConnection();
-        await connection.OpenAsync();
+        using var connection = _connectionFactory.CreateConnection();
         
-        await using var selectQuery = new NpgsqlCommand(
-            "SELECT * FROM users WHERE email = @email", connection);
-        selectQuery.Parameters.AddWithValue("email", email);
-        
-        var count = (long)await selectQuery.ExecuteScalarAsync();
+        var count = await connection.QuerySingleAsync<int>(
+            "SELECT COUNT(*) FROM users WHERE email = @email", 
+            new { email });
 
         if (count > 0)
         {
@@ -52,37 +45,21 @@ public class UserRepository
 
     public async Task<UserEntity> CreateAsync(CreateUserRequestDto request)
     {
-        await using var connection = (NpgsqlConnection)_connectionFactory.CreateConnection();
-        await connection.OpenAsync();
+        using var connection = _connectionFactory.CreateConnection();
 
         var query = """
-                    INSERT INTO 
-                        users (username, email, password)
-                    VALUES 
-                        (@username, @email, @password)
-                    RETURNING 
-                    *;
-                """;
+                    INSERT INTO users (username, email, password_digest)
+                    VALUES (@username, @email, @password)
+                    RETURNING *
+                    """;
 
-        await using var command = new NpgsqlCommand(query, connection);
-        command.Parameters.AddWithValue("username", request.Username);
-        command.Parameters.AddWithValue("email", request.Email);
-        command.Parameters.AddWithValue("password", request.Password);
-
-        await using var reader = await command.ExecuteReaderAsync();
-
-        if (await reader.ReadAsync())
+        var newUser = await connection.QuerySingleAsync<UserEntity>(query, new
         {
-            return new UserEntity(
-                id: reader.GetGuid(reader.GetOrdinal("id")),
-                username: reader.GetString(reader.GetOrdinal("username")),
-                email: reader.GetString(reader.GetOrdinal("email")),
-                password: reader.GetString(reader.GetOrdinal("password")),
-                createdAt: reader.GetDateTime(reader.GetOrdinal("created_at")),
-                updatedAt: reader.IsDBNull(reader.GetOrdinal("updated_at")) ? null : reader.GetDateTime(reader.GetOrdinal("updated_at"))
-            );
-        }
+            username = request.Username,
+            email = request.Email,
+            password = request.Password
+        });
 
-        throw new ServiceException("Falha durante a criação de novo usuário.");
+        return newUser;
     }    
 }
