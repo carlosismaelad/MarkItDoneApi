@@ -11,6 +11,9 @@ project.lock.json
 # Visual Studio Code
 .vscode
 
+# Entity Framework Migrations (generated files)
+Migrations/
+
 # User-specific files
 *.suo
 *.user
