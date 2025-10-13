@@ -6,6 +6,7 @@ using MarkItDoneApi.V1.Session.Services;
 using MarkItDoneApi.V1.Core.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,12 @@ builder.Services.AddOpenApi();
 // Adds controllers support
 builder.Services.AddControllers();
 
+// Configure JSON options for camelCase naming
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
 // Configure Entity Framework for migrations only
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -23,11 +30,11 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 builder.Services.AddScoped<ConnectionFactory>();
 builder.Services.AddScoped<DatabaseStatusChecker>();
 
-// Registrar dependências da camada User
+// RRegister User layer dependencies
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 
-// Registrar dependências da camada Session
+// Register Session layer dependencies
 builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<SessionService>();
 

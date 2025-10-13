@@ -54,28 +54,28 @@ public static class UserValidation
 
     // ======================== BUSINESS VALIDATIONS ========================
 
-    public static void ValidateUserCreation(UserRequest data)
+    public static void ValidateUserCreation(CreateUserRequestDto data)
     {
-        ValidateUsername(data.username, true);
-        ValidateEmail(data.email, true);
-        ValidatePassword(data.password, true);
+        ValidateUsername(data.Username, true);
+        ValidateEmail(data.Email, true);
+        ValidatePassword(data.Password, true);
     }
 
-    public static void ValidateUserUpdate(UserRequest data)
+    public static void ValidateUserUpdate(UpdateUserRequestDto data)
     {
-        if (data.username is not null)
+        if (data.Username is not null)
         {
-            ValidateUsername(data.username);
+            ValidateUsername(data.Username);
         }
 
-        if (data.email is not null)
+        if (data.Email is not null)
         {
-            ValidateEmail(data.email);
+            ValidateEmail(data.Email);
         }
 
-        if (data.password is not null)
+        if (data.Password is not null)
         {
-            ValidatePassword(data.password);
+            ValidatePassword(data.Password);
         }
     }
 
@@ -127,12 +127,12 @@ public static class UserValidation
 
     // ======================== PUBLIC FUNCTIONS (COMPATIBILITY) ========================
 
-    public static void UserCreationValidation(UserRequest data)
+    public static void UserCreationValidation(CreateUserRequestDto data)
     {
         ValidateUserCreation(data);
     }
 
-    public static void UserUpdateValidation(UserRequest data)
+    public static void UserUpdateValidation(UpdateUserRequestDto data)
     {
         ValidateUserUpdate(data);
     }

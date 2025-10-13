@@ -43,7 +43,7 @@ public class UserRepository
         }
     }
 
-    public async Task<UserEntity> CreateAsync(UserRequest request)
+    public async Task<UserEntity> CreateAsync(CreateUserRequestDto request)
     {
         using var connection = _connectionFactory.CreateConnection();
 
@@ -55,9 +55,9 @@ public class UserRepository
 
         var newUser = await connection.QuerySingleAsync<UserEntity>(query, new
         {
-            username = request.username,
-            email = request.email,
-            password = request.password
+            username = request.Username,
+            email = request.Email,
+            password = request.Password
         });
 
         return newUser;
@@ -79,7 +79,7 @@ public class UserRepository
         return userFounded;
     }
 
-    public async Task<UserEntity> UpdateUser(string username, UserRequest user) 
+    public async Task<UserEntity> UpdateUser(string username, UpdateUserRequestDto user) 
     {
         using var connection = _connectionFactory.CreateConnection();
 
@@ -95,9 +95,9 @@ public class UserRepository
 
         var updatedUser = await connection.QuerySingleAsync<UserEntity>(updateQuery, new
         {
-            username = user.username,
-            email = user.email,
-            password = user.password,
+            username = user.Username,
+            email = user.Email,
+            password = user.Password,
             currentUsername = username
         });
 

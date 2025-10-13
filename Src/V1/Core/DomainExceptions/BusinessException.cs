@@ -19,10 +19,10 @@ public class BusinessException : Exception
     {
         return new
         {
-            name = nameof(BusinessException),
-            message = Message,
-            action = Action,
-            status_code = StatusCode
+            Name = nameof(BusinessException),
+            Message = Message,
+            Action = Action,
+            StatusCode = StatusCode
         };
     }
 }

@@ -42,10 +42,10 @@ public class ExceptionHandlingMiddleware
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await context.Response.WriteAsJsonAsync(new { 
-                name = "InternalServerError",
-                message = "Erro interno do servidor.",
-                action = "Tente novamente mais tarde ou entre em contato com o suporte.",
-                status_code = 500
+                Name = "InternalServerError",
+                Message = "Erro interno do servidor.",
+                Action = "Tente novamente mais tarde ou entre em contato com o suporte.",
+                StatusCode = 500
             });
         }
     }

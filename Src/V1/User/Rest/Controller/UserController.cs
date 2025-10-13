@@ -17,7 +17,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] UserRequest user)
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDto user)
     {
         UserValidation.UserCreationValidation(user);
         var response = await _userService.CreateAsync(user);
@@ -32,7 +32,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPatch("{username}")]
-    public async Task<IActionResult> UpdateUser([FromRoute] string username, [FromBody] UserRequest user) 
+    public async Task<IActionResult> UpdateUser([FromRoute] string username, [FromBody] UpdateUserRequestDto user) 
     {
         UserValidation.UserUpdateValidation(user);
         var updatedUser = await _userService.UpdateUserAsync(username, user);

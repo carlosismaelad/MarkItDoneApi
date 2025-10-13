@@ -12,23 +12,23 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public async Task<UserResponseDto> CreateAsync(UserRequest request)
+    public async Task<UserResponseDto> CreateAsync(CreateUserRequestDto request)
     {
-        await _userRepository.ValidateUniqueUsernameAsync(request.username);
-        await _userRepository.ValidateUniqueEmailAsync(request.email);
-        var hashedPassword = PasswordService.Hash(request.password);
+        await _userRepository.ValidateUniqueUsernameAsync(request.Username);
+        await _userRepository.ValidateUniqueEmailAsync(request.Email);
+        var hashedPassword = PasswordService.Hash(request.Password);
 
-        var userToCreate = new UserRequest(
-            username: request.username,
-            email: request.email,
-            password: hashedPassword
+        var userToCreate = new CreateUserRequestDto(
+            Username: request.Username,
+            Email: request.Email,
+            Password: hashedPassword
         );
 
         var newUser = await _userRepository.CreateAsync(userToCreate);
 
         return new UserResponseDto(
-            id: newUser.Id,
-            username: newUser.Username
+            Id: newUser.Id,
+            Username: newUser.Username
         );
     }
 
@@ -37,34 +37,34 @@ public class UserService
         var user = await _userRepository.GetOneByUsername(username);
 
         return new UserResponseDto(
-            id: user.Id,
-            username: user.Username
+            Id: user.Id,
+            Username: user.Username
         );
     }
     
-    public async Task<UserResponseDto> UpdateUserAsync(string username, UserRequest user) 
+    public async Task<UserResponseDto> UpdateUserAsync(string username, UpdateUserRequestDto user) 
     {
         var currentUser = await _userRepository.GetOneByUsername(username);
 
-        if (!string.IsNullOrEmpty(user.username) && user.username != currentUser.Username)
-            await _userRepository.ValidateUniqueUsernameAsync(user.username);
+        if (!string.IsNullOrEmpty(user.Username) && user.Username != currentUser.Username)
+            await _userRepository.ValidateUniqueUsernameAsync(user.Username);
 
-        if (!string.IsNullOrEmpty(user.email) && user.email != currentUser.Email)
-            await _userRepository.ValidateUniqueEmailAsync(user.email);
+        if (!string.IsNullOrEmpty(user.Email) && user.Email != currentUser.Email)
+            await _userRepository.ValidateUniqueEmailAsync(user.Email);
 
-        var userToUpdate = new UserRequest(
-            username: user.username ?? currentUser.Username,
-            email: user.email ?? currentUser.Email,
-            password: !string.IsNullOrEmpty(user.password) 
-                ? PasswordService.Hash(user.password) 
+        var userToUpdate = new UpdateUserRequestDto(
+            Username: user.Username ?? currentUser.Username,
+            Email: user.Email ?? currentUser.Email,
+            Password: !string.IsNullOrEmpty(user.Password) 
+                ? PasswordService.Hash(user.Password) 
                 : currentUser.Password
         );
             
         var updatedUser = await _userRepository.UpdateUser(username, userToUpdate);
         
         return new UserResponseDto(
-            id: updatedUser.Id,
-            username: updatedUser.Username
+            Id: updatedUser.Id,
+            Username: updatedUser.Username
         );
     }
 }

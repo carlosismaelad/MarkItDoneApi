@@ -20,10 +20,10 @@ namespace MarkItDoneApi.Src.V1.Core.DomainExceptions
         {
             return new
             {
-                name = nameof(ServiceException),
-                message = Message,
-                action = Action,
-                status_code = StatusCode
+                Name = nameof(ServiceException),
+                Message = Message,
+                Action = Action,
+                StatusCode = StatusCode
             };
         }
     }

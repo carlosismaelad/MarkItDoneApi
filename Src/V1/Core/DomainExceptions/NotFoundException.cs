@@ -19,10 +19,10 @@ public class NotFoundException : Exception
     {
         return new
         {
-            name = nameof(NotFoundException),
-            message = Message,
-            action = Action,
-            status_code = StatusCode
+            Name = nameof(NotFoundException),
+            Message = Message,
+            Action = Action,
+            StatusCode = StatusCode
         };
     }
 }
