@@ -55,11 +55,52 @@ public class UserRepository
 
         var newUser = await connection.QuerySingleAsync<UserEntity>(query, new
         {
-            username = request.Username,
-            email = request.Email,
-            password = request.Password
+            username = request.username,
+            email = request.email,
+            password = request.password
         });
 
         return newUser;
-    }    
+    }
+
+    public async Task<UserEntity> GetOneByUsername(string username)
+    {
+        using var connection = _connectionFactory.CreateConnection();
+
+        var selectQuery = """
+        SELECT * FROM users WHERE username = @username
+        """;
+
+        var userFounded = await connection.QuerySingleOrDefaultAsync<UserEntity>(selectQuery, new
+        {
+            username
+        }) ?? throw new NotFoundException("Usuário não encontrado.");
+
+        return userFounded;
+    }
+
+    public async Task<UserEntity> UpdateUser(string username, UserRequest user) 
+    {
+        using var connection = _connectionFactory.CreateConnection();
+
+        var updateQuery = """
+            UPDATE users 
+            SET username = @username, 
+                email = @email, 
+                password_digest = @password, 
+                updated_at = NOW()
+            WHERE username = @currentUsername
+            RETURNING *
+            """;
+
+        var updatedUser = await connection.QuerySingleAsync<UserEntity>(updateQuery, new
+        {
+            username = user.username,
+            email = user.email,
+            password = user.password,
+            currentUsername = username
+        });
+
+        return updatedUser;
+    }
 }
