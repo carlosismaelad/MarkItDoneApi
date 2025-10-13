@@ -43,7 +43,7 @@ public class UserRepository
         }
     }
 
-    public async Task<UserEntity> CreateAsync(CreateUserRequestDto request)
+    public async Task<UserEntity> CreateAsync(UserRequest request)
     {
         using var connection = _connectionFactory.CreateConnection();
 

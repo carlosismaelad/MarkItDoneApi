@@ -4,8 +4,6 @@ using System.Text.RegularExpressions;
 
 namespace MarkItDoneApi.V1.User.UserUtils;
 
-public record UserValidationData(string? Username, string? Email, string? Password);
-
 public static class UserValidation
 {
     // ======================== INDIVIDUAL VALIDATIONS ========================
@@ -56,14 +54,14 @@ public static class UserValidation
 
     // ======================== BUSINESS VALIDATIONS ========================
 
-    public static void ValidateUserCreation(CreateUserRequestDto data)
+    public static void ValidateUserCreation(UserRequest data)
     {
         ValidateUsername(data.Username, true);
         ValidateEmail(data.Email, true);
         ValidatePassword(data.Password, true);
     }
 
-    public static void ValidateUserUpdate(UserValidationData data)
+    public static void ValidateUserUpdate(UserRequest data)
     {
         if (data.Username is not null)
         {
@@ -129,12 +127,12 @@ public static class UserValidation
 
     // ======================== PUBLIC FUNCTIONS (COMPATIBILITY) ========================
 
-    public static void UserCreationValidation(CreateUserRequestDto data)
+    public static void UserCreationValidation(UserRequest data)
     {
         ValidateUserCreation(data);
     }
 
-    public static void UserUpdateValidation(UserValidationData data)
+    public static void UserUpdateValidation(UserRequest data)
     {
         ValidateUserUpdate(data);
     }

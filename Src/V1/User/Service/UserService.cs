@@ -12,13 +12,13 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public async Task<UserResponseDto> CreateAsync(CreateUserRequestDto request)
+    public async Task<UserResponseDto> CreateAsync(UserRequest request)
     {
         await _userRepository.ValidateUniqueUsernameAsync(request.Username);
         await _userRepository.ValidateUniqueEmailAsync(request.Email);
         var hashedPassword = PasswordService.Hash(request.Password);
         
-        var userToCreate = new CreateUserRequestDto(
+        var userToCreate = new UserRequest(
             Username: request.Username,
             Email: request.Email,
             Password: hashedPassword
