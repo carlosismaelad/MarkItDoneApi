@@ -1,6 +1,8 @@
 using MarkItDoneApi.Infra.Data;
 using MarkItDoneApi.V1.User.Repository;
 using MarkItDoneApi.V1.User.Service;
+using MarkItDoneApi.V1.Session.Repository;
+using MarkItDoneApi.V1.Session.Services;
 using MarkItDoneApi.V1.Core.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -21,9 +23,13 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 builder.Services.AddScoped<ConnectionFactory>();
 builder.Services.AddScoped<DatabaseStatusChecker>();
 
-// Register User layer dependencies
+// Registrar dependências da camada User
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
+
+// Registrar dependências da camada Session
+builder.Services.AddScoped<SessionRepository>();
+builder.Services.AddScoped<SessionService>();
 
 var app = builder.Build();
 

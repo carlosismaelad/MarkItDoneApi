@@ -103,4 +103,20 @@ public class UserRepository
 
         return updatedUser;
     }
+
+    public async Task<UserEntity> FindByEmailAsync(string email)
+    {
+        using var connection = _connectionFactory.CreateConnection();
+
+        var selectQuery = """
+        SELECT * FROM users WHERE email = @email
+        """;
+
+        var userFound = await connection.QuerySingleOrDefaultAsync<UserEntity>(selectQuery, new
+        {
+            email
+        }) ?? throw new NotFoundException("Usuário não encontrado.");
+
+        return userFound;
+    }
 }

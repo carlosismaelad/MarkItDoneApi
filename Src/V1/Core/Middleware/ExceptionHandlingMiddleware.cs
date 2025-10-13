@@ -33,15 +33,10 @@ public class ExceptionHandlingMiddleware
             context.Response.StatusCode = ex.StatusCode;
             await context.Response.WriteAsJsonAsync(ex.ToJson());
         }
-        catch (UnauthorizedAccessException ex)
+        catch (UnauthorizedException ex)
         {
-            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            await context.Response.WriteAsJsonAsync(new { 
-                name = "UnauthorizedAccessException",
-                message = ex.Message,
-                action = !string.IsNullOrEmpty(ex.Message) ? ex.Message : "Faça login para acessar este recurso.",
-                status_code = 401
-            });
+            context.Response.StatusCode = ex.StatusCode;
+            await context.Response.WriteAsJsonAsync(ex.ToJson());
         }
         catch (Exception)
         {

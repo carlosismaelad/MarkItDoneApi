@@ -1,8 +1,8 @@
 namespace MarkItDoneApi.V1.Session.Entity;
 
-public class Session
+public class SessionEntity
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
   
     public Guid UserId { get; set; }
   

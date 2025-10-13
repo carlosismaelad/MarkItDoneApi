@@ -7,7 +7,7 @@ namespace MarkItDoneApi.Infra.Data
   public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
   {
     public DbSet<UserEntity> Users { get; set; }
-    public DbSet<Session> Sessions { get; set; }
+    public DbSet<SessionEntity> Sessions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,7 +61,7 @@ namespace MarkItDoneApi.Infra.Data
       });
       
       // Session Migration
-      modelBuilder.Entity<Session>(entity =>
+      modelBuilder.Entity<SessionEntity>(entity =>
       {
         entity.ToTable("sessions");
         

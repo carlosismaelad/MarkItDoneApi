@@ -56,26 +56,26 @@ public static class UserValidation
 
     public static void ValidateUserCreation(UserRequest data)
     {
-        ValidateUsername(data.Username, true);
-        ValidateEmail(data.Email, true);
-        ValidatePassword(data.Password, true);
+        ValidateUsername(data.username, true);
+        ValidateEmail(data.email, true);
+        ValidatePassword(data.password, true);
     }
 
     public static void ValidateUserUpdate(UserRequest data)
     {
-        if (data.Username is not null)
+        if (data.username is not null)
         {
-            ValidateUsername(data.Username);
+            ValidateUsername(data.username);
         }
 
-        if (data.Email is not null)
+        if (data.email is not null)
         {
-            ValidateEmail(data.Email);
+            ValidateEmail(data.email);
         }
 
-        if (data.Password is not null)
+        if (data.password is not null)
         {
-            ValidatePassword(data.Password);
+            ValidatePassword(data.password);
         }
     }
 
