@@ -28,6 +28,11 @@ public class ExceptionHandlingMiddleware
             context.Response.StatusCode = ex.StatusCode;
             await context.Response.WriteAsJsonAsync(ex.ToJson());
         }
+        catch (NotFoundException ex)
+        {
+            context.Response.StatusCode = ex.StatusCode;
+            await context.Response.WriteAsJsonAsync(ex.ToJson());
+        }
         catch (UnauthorizedAccessException ex)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
