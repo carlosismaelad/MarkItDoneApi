@@ -1,4 +1,4 @@
-namespace MarkItDoneApi.V1.User.Entity;
+namespace MarkItDoneApi.Src.V1.User.Entity;
 
 public class UserEntity
 {

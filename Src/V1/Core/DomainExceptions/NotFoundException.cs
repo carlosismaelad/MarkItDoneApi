@@ -1,4 +1,4 @@
-namespace MarkItDoneApi.V1.Core.DomainExceptions;
+namespace MarkItDoneApi.Src.V1.Core.DomainExceptions;
 
 public class NotFoundException : Exception
 {

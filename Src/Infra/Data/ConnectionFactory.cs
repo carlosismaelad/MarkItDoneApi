@@ -2,7 +2,7 @@ using System.Data;
 using MarkItDoneApi.Src.V1.Core.DomainExceptions;
 using Npgsql;
 
-namespace MarkItDoneApi.Infra.Data;
+namespace MarkItDoneApi.Src.Infra.Data;
 
 public interface IConnectionFactory
 {

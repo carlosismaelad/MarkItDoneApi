@@ -1,9 +1,9 @@
-using MarkItDoneApi.Infra.Data;
-using MarkItDoneApi.V1.Session.Entity;
 using System.Security.Cryptography;
 using Dapper;
+using MarkItDoneApi.Src.Infra.Data;
+using MarkItDoneApi.Src.V1.Session.Entity;
 
-namespace MarkItDoneApi.V1.Session.Repository;
+namespace MarkItDoneApi.Src.V1.Session.Repository;
 
 public class SessionRepository
 {

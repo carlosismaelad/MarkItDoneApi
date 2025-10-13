@@ -1,7 +1,7 @@
-using MarkItDoneApi.Infra.Data;
+using MarkItDoneApi.Src.Infra.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarkItDoneApi.V1.Status;
+namespace MarkItDoneApi.Src.V1.Status;
 
 [ApiController]
 [Route("api/v1/status")]

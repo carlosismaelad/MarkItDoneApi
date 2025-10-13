@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using Npgsql;
 
-namespace MarkItDoneApi.Infra.Data;
+namespace MarkItDoneApi.Src.Infra.Data;
 
 public class DatabaseStatusChecker
 {
@@ -46,7 +45,7 @@ public class DatabaseStatusChecker
 
 public class DatabaseStatusResult
 {
-    public string Version { get; set; }
+    public string Version { get; set; } = string.Empty;
     public int MaxConnections { get; set; }
     public int OpenedConnections { get; set; }
 }

@@ -1,9 +1,9 @@
-using MarkItDoneApi.Infra.Data;
-using MarkItDoneApi.V1.User.Repository;
-using MarkItDoneApi.V1.User.Service;
-using MarkItDoneApi.V1.Session.Repository;
-using MarkItDoneApi.V1.Session.Services;
-using MarkItDoneApi.V1.Core.Middleware;
+using MarkItDoneApi.Src.Infra.Data;
+using MarkItDoneApi.Src.V1.User.Repository;
+using MarkItDoneApi.Src.V1.User.Service;
+using MarkItDoneApi.Src.V1.Session.Repository;
+using MarkItDoneApi.Src.V1.Session.Services;
+using MarkItDoneApi.Src.V1.Core.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Text.Json;

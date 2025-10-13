@@ -1,4 +1,3 @@
-
 namespace MarkItDoneApi.Src.V1.Core.DomainExceptions
 {
     public class ServiceException : Exception
