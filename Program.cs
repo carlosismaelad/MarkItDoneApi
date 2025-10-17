@@ -7,6 +7,7 @@ using MarkItDoneApi.Src.V1.Core.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Text.Json;
+using MarkItDoneApi.Src.V1.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,9 @@ builder.Services.AddScoped<UserService>();
 // Register Session layer dependencies
 builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<SessionService>();
+
+// Register Email service
+builder.Services.AddScoped<MarkItDoneApi.Src.V1.Email.EmailService>();
 
 var app = builder.Build();
 
