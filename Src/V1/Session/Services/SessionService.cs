@@ -18,6 +18,12 @@ public class SessionService
         _userRepository = userRepository;
     }
 
+    public async Task<SessionEntity> CreateSessionWithAuthAsync(Guid userId)
+    {
+        var newSession = await _sessionRepository.InsertPendingSessionAsync(userId);
+        return newSession;
+    }
+
     public async Task<UserEntity> GetAuthenticatedUserAsync(string providedEmail, string providedPassword)
     {
         try
@@ -42,7 +48,7 @@ public class SessionService
         }
     }
 
-    private static async Task ValidatePasswordAsync(string providedPassword, string storedPassword)
+    public async Task ValidatePasswordAsync(string providedPassword, string storedPassword)
     {
         await Task.Run(() =>
         {
@@ -51,21 +57,16 @@ public class SessionService
             if (!correctPasswordMatch)
             {
                 throw new UnauthorizedException(
-                    message: "Password não confere.",
+                    message: "Dados de login não conferem.",
                     action: "Verifique se os dados enviados estão corretos."
                 );
             }
         });
     }
 
-    public async Task<SessionEntity> CreateSessionAsync(Guid userId)
+    public async Task<SessionEntity> VerifySessionCodeAsync(Guid sessionId, string code)
     {
-        var session = new SessionEntity
-        {
-            UserId = userId
-        };
-        
-        var newSession = await _sessionRepository.CreateAsync(session);
-        return newSession;
+        var verifiedSession = await _sessionRepository.VerifyCodeAsync(sessionId, code);
+        return verifiedSession;
     }
 }
