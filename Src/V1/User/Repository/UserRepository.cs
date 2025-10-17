@@ -109,8 +109,18 @@ public class UserRepository
         using var connection = _connectionFactory.CreateConnection();
 
         var selectQuery = """
-        SELECT * FROM users WHERE email = @email
-        """;
+            SELECT 
+                id, 
+                username, 
+                email, 
+                password_digest AS Password, 
+                created_at AS CreatedAt, 
+                updated_at AS UpdatedAt 
+            FROM 
+                users 
+            WHERE 
+                email = @email
+            """;
 
         var userFound = await connection.QuerySingleOrDefaultAsync<UserEntity>(selectQuery, new
         {
