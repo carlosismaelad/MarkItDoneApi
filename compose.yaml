@@ -14,12 +14,14 @@ services:
       - "5432:5432"
     networks:
       - md-network
-  # mailcatcher:
-  #   container_name: mailcatcher-dev
-  #   image: sj26/mailcatcher
-  #   ports:
-  #     - "1025:1025"
-  #     - "1080:1080"
+  mailcatcher:
+    container_name: mailcatcher-dev
+    image: sj26/mailcatcher
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    networks:
+      - md-network
   md_pgadmin:
     container_name: md_pgadmin
     image: dpage/pgadmin4
