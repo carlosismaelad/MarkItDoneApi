@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MarkItDoneApi.Src.V1.Session.Services;
+using MarkItDoneApi.Src.V1.Session.Service;
 using MarkItDoneApi.Src.V1.Session.Rest.DTO;
 using MarkItDoneApi.Src.V1.Email;
 using MarkItDoneApi.Src.V1.Email.DTO;
