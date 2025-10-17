@@ -1,3 +1,4 @@
+using MarkItDoneApi.Src.V1.User.Repository;
 using MarkItDoneApi.Src.V1.User.Rest.DTO;
 using MarkItDoneApi.Src.V1.User.Service;
 using MarkItDoneApi.Src.V1.User.UserUtils;
@@ -21,14 +22,20 @@ public class UserController : ControllerBase
     {
         UserValidation.UserCreationValidation(user);
         var response = await _userService.CreateAsync(user);
-        return Created(string.Empty, response);
+
+        var createdUser = UserResponseDto.FromEntity(response);        
+
+        return Created(string.Empty, createdUser);
     }
 
     [HttpGet("{username}")]
     public async Task<IActionResult> GetUserByUsername([FromRoute] string username)
     {
         var user = await _userService.GetUserByUsernameAsync(username);
-        return Ok(user);
+
+        var userFound = UserResponseDto.FromEntity(user);
+        
+        return Ok(userFound);
     }
 
     [HttpPatch("{username}")]
@@ -36,7 +43,10 @@ public class UserController : ControllerBase
     {
         UserValidation.UserUpdateValidation(user);
         var updatedUser = await _userService.UpdateUserAsync(username, user);
-        return Ok(updatedUser);
+
+        var updatedUserResponse = UserResponseDto.FromEntity(updatedUser);
+        
+        return Ok(updatedUserResponse);
     }
 
 }

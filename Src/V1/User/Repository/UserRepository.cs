@@ -1,8 +1,8 @@
 using MarkItDoneApi.Src.V1.User.Entity;
 using MarkItDoneApi.Src.V1.User.Rest.DTO;
 using MarkItDoneApi.Src.V1.Core.DomainExceptions;
-using Dapper;
 using MarkItDoneApi.Src.Infra.Data;
+using Dapper;
 
 namespace MarkItDoneApi.Src.V1.User.Repository;
 

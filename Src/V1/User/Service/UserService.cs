@@ -1,6 +1,7 @@
 using MarkItDoneApi.Src.V1.User.Repository;
 using MarkItDoneApi.Src.V1.User.Rest.DTO;
 using MarkItDoneApi.Src.V1.Core.Security;
+using MarkItDoneApi.Src.V1.User.Entity;
 
 namespace MarkItDoneApi.Src.V1.User.Service;
 
@@ -12,7 +13,7 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public async Task<UserResponseDto> CreateAsync(CreateUserRequestDto request)
+    public async Task<UserEntity> CreateAsync(CreateUserRequestDto request)
     {
         await _userRepository.ValidateUniqueUsernameAsync(request.Username);
         await _userRepository.ValidateUniqueEmailAsync(request.Email);
@@ -26,23 +27,17 @@ public class UserService
 
         var newUser = await _userRepository.CreateAsync(userToCreate);
 
-        return new UserResponseDto(
-            Id: newUser.Id,
-            Username: newUser.Username
-        );
+        return newUser;
     }
 
-    public async Task<UserResponseDto> GetUserByUsernameAsync(string username)
+    public async Task<UserEntity> GetUserByUsernameAsync(string username)
     {
         var user = await _userRepository.GetOneByUsername(username);
 
-        return new UserResponseDto(
-            Id: user.Id,
-            Username: user.Username
-        );
+        return user;
     }
     
-    public async Task<UserResponseDto> UpdateUserAsync(string username, UpdateUserRequestDto user) 
+    public async Task<UserEntity> UpdateUserAsync(string username, UpdateUserRequestDto user) 
     {
         var currentUser = await _userRepository.GetOneByUsername(username);
 
@@ -62,9 +57,6 @@ public class UserService
             
         var updatedUser = await _userRepository.UpdateUser(username, userToUpdate);
         
-        return new UserResponseDto(
-            Id: updatedUser.Id,
-            Username: updatedUser.Username
-        );
+        return updatedUser;
     }
 }
