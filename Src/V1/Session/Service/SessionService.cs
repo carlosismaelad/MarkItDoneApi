@@ -5,7 +5,7 @@ using MarkItDoneApi.Src.V1.Core.DomainExceptions;
 using MarkItDoneApi.Src.V1.Session.Repository;
 using MarkItDoneApi.Src.V1.Session.Entity;
 
-namespace MarkItDoneApi.Src.V1.Session.Services;
+namespace MarkItDoneApi.Src.V1.Session.Service;
 
 public class SessionService
 {

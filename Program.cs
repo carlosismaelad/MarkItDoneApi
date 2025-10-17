@@ -2,12 +2,13 @@ using MarkItDoneApi.Src.Infra.Data;
 using MarkItDoneApi.Src.V1.User.Repository;
 using MarkItDoneApi.Src.V1.User.Service;
 using MarkItDoneApi.Src.V1.Session.Repository;
-using MarkItDoneApi.Src.V1.Session.Services;
+using MarkItDoneApi.Src.V1.Session.Service;
 using MarkItDoneApi.Src.V1.Core.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Text.Json;
 using MarkItDoneApi.Src.V1.Email;
+using MarkItDoneApi.Src.V1.Migration.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 builder.Services.AddScoped<ConnectionFactory>();
 builder.Services.AddScoped<DatabaseStatusChecker>();
 
-// RRegister User layer dependencies
+// Register User layer dependencies
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserService>();
 
@@ -40,7 +41,10 @@ builder.Services.AddScoped<SessionRepository>();
 builder.Services.AddScoped<SessionService>();
 
 // Register Email service
-builder.Services.AddScoped<MarkItDoneApi.Src.V1.Email.EmailService>();
+builder.Services.AddScoped<EmailService>();
+
+// Register Migration service
+builder.Services.AddScoped<MigrationService>();
 
 var app = builder.Build();
 
